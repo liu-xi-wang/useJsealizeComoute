@@ -8,8 +8,15 @@ export default function App() {
   }
   return (
     <>
+     <div className='container'  style={{
+        display: 'flex',
+        justifyContent:'center',
+        alignItems:'center', //（水平居中对齐）
+        height:'100vh',
+      }}>
       <button onClick={add}>add</button>
       {count>5?'nothing': <Move></Move>}
+     </div>
     </>
   )
 }

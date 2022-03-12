@@ -1,88 +1,37 @@
 import ReactDOM from 'react-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import App from './App'
-// import BigNumber from 'bignumber.js'
-// const a = new BigNumber('12341324523456234561342')
-// const b = '1345234534562451234324523452345234512431252'
+import { createStore } from "redux";
 
-const  a = '2319'
-const  b = '1'
-
-const add = (a,b) => {
-  const newA = a.split('').reverse()
-  const newB = b.split('').reverse()
-
-
-  if(newA.length>newB.length){
-    const count =newA.length - newB.length
-    for (let index = 0; index < count; index++) {
-      newB.push('0')
-    }
-  }else{
-    const count =newB.length - newA.length
-    for (let index = 0; index < count; index++) {
-      newA.push('0')
-    }
-  }
-  let isMore =false
-  const sum =[]
-  for (let index = 0; index < newA.length; index++) {
-
-    if(isMore){
-      if((+newA[index] + +newB[index] + 1) >= 10){
-        sum[index]=(+newA[index] + +newB[index] + 1)%10
-        isMore = true
-        if(newA.length === newB.length){
-          sum[index+1] = (+newA[index] + +newB[index] + 1)/10
-        }
-      }else{
-        sum[index]=(+newA[index] + +newB[index] + 1)
-        isMore = false
-      }
-      
-    }else{
-      if((+newA[index] + +newB[index] ) >= 10){
-        sum[index]=(+newA[index] + +newB[index] )%10
-        isMore = true
-      }else{
-        sum[index]=(+newA[index] + +newB[index] )
-        isMore = false
-      }
-    }
-
-
-
-    // if((+newA[index] + +newB[index]) >= 10){
-
-    //   sum[index] =( +newA[index] + +newB[index])%10
-    //   if(isMore){
-    //     sum[index]= +sum[index] + 1
-    //     if( sum[index]>=10){
-    //       sum[index]=sum[index]%10
-    //       isMore=true
-    //     }
-    //   }
-    //   isMore=true
-    // }else{
-    //   sum[index] =( +newA[index] + +newB[index])
-    //   if(isMore){
-    //     sum[index]= +sum[index] + 1
-    //   }
-    //   isMore=false
-    // }
-    // console.log(sum);
-    // return sum.reverse().join('')
-    
-  }
-
-
-  console.log(sum.reverse().join(''));
+const reducer = (state = 0,action) => {
+  console.log('reducer',state,action);
+  switch (action.type) {
+    case 'minus':
+      state = state - 1
+      break;
+    case 'plus':
+        state = state + 1
+        break;
+    case 'multiplication':
+      state = state * 6
+      break;
   
-
-
+    default:
+      break;
+  }
+  return state
 }
-add (a,b)
+
+const store = createStore(reducer)
+const unSubscribe= store.subscribe( () => {
+  console.log('state',store.getState());
+})
+
+store.dispatch({type:'minus'})
+store.dispatch({type:'plus'})
+store.dispatch({type:'multiplication'})
 
 
-// console.log(a.plus(b).toFixed());
-ReactDOM.render(<App></App>, document.getElementById('root'))
+
+store.dispatch({type:'multiplication'})
+unSubscribe()
+
+ReactDOM.render(<h1>redux</h1> ,document.getElementById('root'))
